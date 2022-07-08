@@ -4,14 +4,14 @@ import {useDispatch, useSelector} from "react-redux"
 
 const AddTask = ()=>{
     const dispatch = useDispatch();
-    const currentState = useSelector(state=> state.taskHandler)
+    const currentState = useSelector(state=> state.taskHandler);
 
 
     // we need some app level state to allow us store info from the input fields
     const [task, setTask] = useState("");
     const [dayAndTime, setDayAndTime] = useState("");
     const [reminder, setReminder] = useState(false);
-    const [infoCheck, setInfoCheck] = useState(null);
+    const [infoCheck, setInfoCheck] = useState(undefined);
 
     // have a single function to handle all inputs
     function handleChanges(evt){
@@ -31,14 +31,13 @@ const AddTask = ()=>{
 
     function verifyDateInfo(evt, info){
         evt.preventDefault()//prevents the form from refreshing the page...
-        console.log("check passed");
 
         // need to be sure we have the right info
-        let at = "@"; let th = "th"; let tick = ":"; let st = "st"
+        let at = "@"; let th = "th"; let tick = ":"; let st = "st"; let cm = ","
         console.log(check(info, at), check(info, th), check(info, st), check(info, tick));
 
         // info is the value of dayAndTime to be passed to the action
-        if(check(info, at) && (check(info, th) || check(info, st)) && check(info, tick)) {
+        if(check(info, at) && (check(info, th) || check(info, st)) && check(info, tick) && check(info, cm)) {
             dispatch(addTask({
                 id : currentState.length + 1,
                 text: task,
@@ -52,7 +51,7 @@ const AddTask = ()=>{
         }else {
             setInfoCheck(false);
             // we also need to show the user an alert to let them know they entered the wrong info structure
-            alert("Date and Time should be in this format '1st, January @ 14:00'. Please use 24hour timing")
+            alert('Date and Time should be in this format "1st, January @ 14:00". Please use 24hour timing')
         }
     }
 
@@ -65,7 +64,14 @@ const AddTask = ()=>{
             <div className="form-control">
                 <label>Day and time</label>
                 {/* style input according to the validation of day and time */}
-                <input name="day" style={infoCheck ? null : {border: "2px solid red"}} required type="text" onChange={handleChanges} value={dayAndTime} placeholder="1st, January @ 14:00"/>
+                <input
+                    name="day" 
+                    style={
+                        infoCheck ? null
+                        : infoCheck === false ? {border: "2px solid red"}
+                        : null
+                        }
+                    required type="text" onChange={handleChanges} value={dayAndTime} placeholder="1st, January @ 14:00"/>
             </div>
             <div className="form-control form-control-check">
                 <label>Set reminder</label>

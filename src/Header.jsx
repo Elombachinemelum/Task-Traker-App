@@ -2,18 +2,12 @@
 import Button from "./Button";
 // import { ReactPropTypes as propTypes } from "prop-types";
 
-const Header = ({title})=>{
-
-    // lets maka a simple function here....
-    // pass it down the component tree to the child component..
-    function handleClick(){
-        console.log("clicked from the header component...");
-    }
+const Header = ({title, updateTaskStatus, addingTask})=>{
 
     return (
         <div className="header">
             <h1>{title}</h1>
-            <Button bgColor="green" text="Add" handleClick={handleClick} />
+            <Button bgColor={addingTask ? "orange" : "green"} text={addingTask ? "Close" :"Add"} updateTaskStatus={updateTaskStatus} />
             {/* <Button bgColor="red" text="Add" /> */}
             {/* <Button bgColor="yellow" text="Add" /> */}
         </div>
