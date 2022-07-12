@@ -21,7 +21,7 @@
     {
       "text": "Test",
       "day": "11th, July @ 17: 31",
-      "reminder": true,
+      "reminder": false,
       "id": "31JpOgo"
     }
   ]
