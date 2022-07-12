@@ -1,6 +1,7 @@
 import {FaTimes} from "react-icons/fa";
 import {useDispatch} from "react-redux";
-import deleter, {reminder} from "./actions/delete";
+import deleter, {updateTaskFromDb} from "./actions/delete"; //this is a thunk...
+
 
 const Task = ({task})=>{
     // to be able to delete items all we need do is filter the array of tasks
@@ -13,12 +14,12 @@ const Task = ({task})=>{
 
 
     return(
-        <div className={`task ${task.reminder ? 'reminder' : null}`} onDoubleClick={()=> dispatch(reminder(task.id))}>
+        <div className={`task ${task.reminder === true ? 'reminder' : null}`} onDoubleClick={()=> dispatch(updateTaskFromDb(task.id))}>
             <h3>
                 {task.text} 
                 <FaTimes
                     style={{backgroundColor:"orange", borderRadius:"2px", cursor:"pointer"}}
-                    onClick={ ()=>dispatch(deleter(task.id)) } 
+                    onClick={ ()=>{dispatch(deleter(task.id))} } 
                 />
             </h3>
             <p>{task.day}</p>

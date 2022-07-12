@@ -1,9 +1,11 @@
 import React from "react";
 import "./App.css";
-import Header from "./Header"
 import { useState } from "react";
-import Tasks from "./Tasks";
-import AddTask from "./AddTask";
+import Header from "./Header";
+import Footer from "./Footer";
+import About from "./About";
+import {Routes, Route} from "react-router-dom"
+import Home from "./Home";
 
 const App = ()=>{
     
@@ -11,16 +13,21 @@ const App = ()=>{
     const [addingTask, setAddingTask] = useState(false);
 
     const updateTaskStatus = ()=>{
-        console.log("logging from the app level", addingTask);
+        // console.log("logging from the app level", addingTask);
         setAddingTask(!addingTask);
     }
 
 
     return (
         <div className="container">
-            <Header updateTaskStatus={updateTaskStatus} addingTask={addingTask} />
-            {addingTask && <AddTask />}
-            <Tasks />
+            <Header title="Task Tracker" updateTaskStatus={updateTaskStatus} addingTask={addingTask} />
+            <Routes>
+                <Route path="/"
+                    element={<Home addingTask={addingTask}/>}
+                />
+                <Route path="/about" element={<About/>} />
+            </Routes>
+            <Footer />
         </div>
     )
 }

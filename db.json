@@ -1,0 +1,28 @@
+{
+  "tasks": [
+    {
+      "text": "App running on serve",
+      "day": "8th, July @ 15: 56",
+      "reminder": true,
+      "id": "ZGEKpb7"
+    },
+    {
+      "text": "React Routing is all that is left at this point!",
+      "day": "9th, July @ 22:35",
+      "reminder": true,
+      "id": "Hf5FbLN"
+    },
+    {
+      "text": "Learn React Router",
+      "day": "11th, July @ 12:50",
+      "reminder": false,
+      "id": "huoGsQB"
+    },
+    {
+      "text": "Test",
+      "day": "11th, July @ 17: 31",
+      "reminder": true,
+      "id": "31JpOgo"
+    }
+  ]
+}

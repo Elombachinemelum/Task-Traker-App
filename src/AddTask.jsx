@@ -1,11 +1,9 @@
 import { useState } from "react";
-import { addTask } from "./actions/delete";
-import {useDispatch, useSelector} from "react-redux"
+import {useDispatch} from "react-redux"
+import { addTaskToDb } from "./actions/delete";
 
 const AddTask = ()=>{
     const dispatch = useDispatch();
-    const currentState = useSelector(state=> state.taskHandler);
-
 
     // we need some app level state to allow us store info from the input fields
     const [task, setTask] = useState("");
@@ -19,7 +17,7 @@ const AddTask = ()=>{
         name === "task" && setTask(value);
         name === "day" && setDayAndTime(value)
         name === "reminder" && setReminder(!reminder)
-        console.log(value); //for a checkbox input the value is on or off...
+        //console.log(value); //for a checkbox input the value is on or off...
     }
 
     // function to make check for us...
@@ -34,12 +32,12 @@ const AddTask = ()=>{
 
         // need to be sure we have the right info
         let at = "@"; let th = "th"; let tick = ":"; let st = "st"; let cm = ","
-        console.log(check(info, at), check(info, th), check(info, st), check(info, tick));
 
         // info is the value of dayAndTime to be passed to the action
         if(check(info, at) && (check(info, th) || check(info, st)) && check(info, tick) && check(info, cm)) {
-            dispatch(addTask({
-                id : currentState.length + 1,
+            // dispatch thunk to make post request and fetch the new data from the to be returned as new state...
+            dispatch(addTaskToDb({
+                //id : currentState.length + 1, //database wont really need you to add an Id field
                 text: task,
                 day: dayAndTime,
                 reminder: reminder
@@ -59,7 +57,7 @@ const AddTask = ()=>{
         <form className="add-from" onSubmit={evt=> verifyDateInfo(evt, dayAndTime)}>
             <div className="form-control">
                 <label>Task</label>
-                <input name="task" required type="text" onChange={handleChanges} value={task} placeholder="Add Task"/>
+                <input name="task" required autoFocus type="text" onChange={handleChanges} value={task} placeholder="Add Task"/>
             </div>
             <div className="form-control">
                 <label>Day and time</label>
@@ -71,7 +69,8 @@ const AddTask = ()=>{
                         : infoCheck === false ? {border: "2px solid red"}
                         : null
                         }
-                    required type="text" onChange={handleChanges} value={dayAndTime} placeholder="1st, January @ 14:00"/>
+                    required type="text" onChange={handleChanges} value={dayAndTime} placeholder="1st, January @ 14:00"
+                />
             </div>
             <div className="form-control form-control-check">
                 <label>Set reminder</label>
